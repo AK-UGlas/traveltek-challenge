@@ -1,0 +1,18 @@
+<flights>
+  <flight carrier="British Airways" depair="LHR" destair="DXB" id="1792211" inarrivaldate="2018-01-20" inarrivaltime="15:10:00" inarrivecode="LHR" inbookingclass="" incarriercode="BA" indepartcode="DEL" indepartdate="2018-01-20" indeparttime="11:05:00" inflightclass="Economy" inflightno="BA256" oneway="0" originalcurrency="GBP" originalprice="1018.140" outarrivaldate="2018-01-02" outarrivaltime="08:35:00" outbookingclass="" outcarriercode="BA" outdepartdate="2018-01-01" outdeparttime="21:40:00" outflightclass="Economy" outflightno="BA109" reservation="VX93UK" />
+  <flight carrier="British Airways" depair="GLA" destair="AUH" id="1803064" inarrivaldate="2018-01-20" inarrivaltime="18:30:00" inarrivecode="GLA" inbookingclass="" incarriercode="BA" indepartcode="DEL" indepartdate="2018-01-20" indeparttime="11:05:00" inflightclass="Economy" inflightno="BA256" oneway="0" originalcurrency="GBP" originalprice="514.090" outarrivaldate="2018-01-02" outarrivaltime="00:35:00" outbookingclass="" outcarriercode="BA" outdepartdate="2018-01-01" outdeparttime="08:55:00" outflightclass="Economy" outflightno="BA1477" reservation="K3BDWJ">
+    <segments>
+      <segment arrcode="LHR" arrdate="2018-01-01" arrterminal="" arrtime="10:25:00" bookingclass="" class="Economy" depcode="GLA" depdate="2018-01-01" depterminal="" deptime="08:55:00" flightid="1803064" flightno="BA1477" journey="out" />
+      <segment arrcode="AUH" arrdate="2018-01-02" arrterminal="" arrtime="00:35:00" bookingclass="" class="Economy" depcode="LHR" depdate="2018-01-01" depterminal="" deptime="13:20:00" flightid="1803064" flightno="BA73" journey="out" />
+      <segment arrcode="LHR" arrdate="2018-01-20" arrterminal="" arrtime="15:10:00" bookingclass="" class="Economy" depcode="DEL" depdate="2018-01-20" depterminal="" deptime="11:05:00" flightid="1803064" flightno="BA256" journey="in" />
+      <segment arrcode="GLA" arrdate="2018-01-20" arrterminal="" arrtime="18:30:00" bookingclass="" class="Economy" depcode="LHR" depdate="2018-01-20" depterminal="" deptime="17:05:00" flightid="1803064" flightno="BA1488" journey="in" />
+    </segments>
+  </flight>
+  <flight carrier="Cathay Pacific" depair="SYD" destair="HKG" id="1665683" inarrivaldate="2018-01-05" inarrivaltime="20:15:00" inarrivecode="LHR" inbookingclass="" incarriercode="CX" indepartcode="HKG" indepartdate="2018-01-05" indeparttime="15:05:00" inflightclass="Economy" inflightno="CX253" oneway="0" originalcurrency="AUD" originalprice="2567.240" outarrivaldate="2018-01-01" outarrivaltime="17:50:00" outbookingclass="" outcarriercode="CX" outdepartdate="2018-01-01" outdeparttime="11:25:00" outflightclass="Economy" outflightno="CX162" reservation="WW6VWU" />
+  <flight carrier="Cathay Pacific" depair="SYD" destair="LHR" id="1672415" inarrivaldate="" inarrivaltime="00:00:00" inarrivecode="" inbookingclass="" incarriercode="" indepartcode="" indepartdate="" indeparttime="00:00:00" inflightclass="" inflightno="" oneway="1" originalcurrency="AUD" originalprice="2570.240" outarrivaldate="2018-01-02" outarrivaltime="20:15:00" outbookingclass="" outcarriercode="CX" outdepartdate="2018-01-01" outdeparttime="11:25:00" outflightclass="Economy" outflightno="CX162" reservation="MX5JVX">
+    <segments>
+      <segment arrcode="HKG" arrdate="2018-01-01" arrterminal="" arrtime="17:50:00" bookingclass="" class="Economy" depcode="SYD" depdate="2018-01-01" depterminal="" deptime="11:25:00" flightid="1672415" flightno="CX162" journey="out" />
+      <segment arrcode="LHR" arrdate="2018-01-02" arrterminal="" arrtime="20:15:00" bookingclass="" class="Economy" depcode="HKG" depdate="2018-01-02" depterminal="" deptime="15:05:00" flightid="1672415" flightno="CX253" journey="out" />
+    </segments>
+  </flight>
+</flights>
