@@ -90,8 +90,18 @@ let additions = [
     {'c': 12, 'd': 16},
     {'c': 24, 'd': 32}
 ]
+let from = 12;
+let to = 24;
 
-const newItems = additions.map( item => item.c)
-                          .sort();
+const tzObjs = [from, to].map( item => {
+    console.log(item);
+    return additions.find( obj => obj.c === item);
+  });
 
-console.log(newItems);
+let toObj = additions.filter( obj => obj.c === to);
+let fromObj = additions.filter( obj => obj.c === from);
+
+console.log(toObj);
+console.log(fromObj);
+
+console.log(tzObjs)

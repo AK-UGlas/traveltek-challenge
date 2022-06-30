@@ -74,13 +74,17 @@ export const InfoContainer = () => {
   const getAverageJourneyTime = (from, to) => {
     // ensure inputs conform to IATA format
     if (validateInputStringFormat(from, IATA_REGEXP) && validateInputStringFormat(to, IATA_REGEXP)) {
-      // get timezones for origin and destination
+      
+        // get timezones for origin and destination
       const tzObjs = [from, to].forEach( item => {
-        destinations.data.filter( obj => obj.destair === item);
+        destinations.data.find( obj => obj.destair === item);
       })
-      console.log([from, to]);
 
       console.log(tzObjs);
+
+      // use lat and long values to grab timezone information from origin and destination
+      // then convert destination to origin time zone and calculate the time difference
+      
       // TimezoneService.getTimezoneFromLatlong(from, to)
       // .then()
       // FlightDataService.getFullJourneys(from, to)
