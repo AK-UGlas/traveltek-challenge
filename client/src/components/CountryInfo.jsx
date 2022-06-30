@@ -1,20 +1,25 @@
 import React from "react";
 
-const CountryInfo = ({countries}) => {
+const CountryInfo = (props) => {
     
     const handleChangeCountry = (evt) => {
-        console.log("user chose " + evt.target.value);
+        props.calcPerc(evt.target.value);
     }
 
     return (
         <>
+        <section>
             <h2>Display flight info by country</h2>
             <form>
-                <label htmlFor="countries">Choose a country</label>
                 <select name="countries" onChange = {handleChangeCountry}>
-                    {countries.map((country, id) => <option key={id}>{country}</option>)}
+                    <option disabled selected>Select a country</option>
+                    {props.countries.map((country, id) => <option key={id}>{country.country}</option>)}
                 </select>
             </form>
+            <p>
+                {props.percentage > 0 ? `% total flights arriving here: ${props.percentage}`: ``}
+            </p>
+        </section>
         </>
     )
 

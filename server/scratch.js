@@ -46,19 +46,48 @@
 // console.log(freqPairs);
 
 
-const dests = [
-    {key: "LAX", val: 4},
-    {key: "DUB", val: 5},
-    {key: "GLA", val: 2},
-    {key: "EDI", val: 2},
-    {key: "LHR", val: 3}
-];
+// const dests = [
+//     {key: "LAX", val: 4},
+//     {key: "DUB", val: 5},
+//     {key: "GLA", val: 2},
+//     {key: "EDI", val: 2},
+//     {key: "LHR", val: 3}
+// ];
 
 //console.log(dests.sort((a, b) => b.val - a.val));
 
-console.log(  dests.sort((a,b) => (a.key > b.key)           ? 1 : ((b.key > a.key)           ? -1 : 0))  );
+//console.log(  dests.sort((a,b) => (a.key > b.key)           ? 1 : ((b.key > a.key)           ? -1 : 0))  );
 
-//objes.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
+// objes.sort((a,b) => (a.last_nom > b.last_nom) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0));
+// props = {};
+// const available = !(props.flights === undefined);
 
+// console.log(available);
 
+[
+    {indeparttime: "11:21:00"}
+]
 
+let items = [
+    {code: 'LAX'},
+    {code: 'DBL'},
+    {code: 'GLA'},
+    {code: 'EDI'},
+    {code: 'DXB'}
+];
+
+let countries = ['USA', 'IRELAND', 'SCOTLAND', 'SCOTLAND', 'UAE'];
+
+let itemsCopy = [...items];
+
+const newItems = [];
+
+for (let idx = 0; idx < items.length; idx++) {
+    newItems.push({...items[idx], country: countries[idx]})
+};
+
+console.log(newItems);
+
+console.log(newItems === items);
+
+console.log(typeof countries);

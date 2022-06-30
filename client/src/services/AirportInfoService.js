@@ -11,7 +11,6 @@ const airportsUrl = 'https://airport-info.p.rapidapi.com/airport';
 const AirportInfoService = {
 
     getAirportInfo(iata) {
-        console.log(iata);
         let query = airportsUrl + '?iata=' + iata; 
         return fetch(query, options)
             .then(res => res.json())

@@ -3,7 +3,7 @@ import React from "react";
 const Destination = (props) => {
     return (
         <li>
-            <h1>{props.destination}</h1>
+            <h1>{props.destination} ({props.country})</h1>
         </li>
     )
 }

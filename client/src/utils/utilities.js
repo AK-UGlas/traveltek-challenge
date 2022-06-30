@@ -14,8 +14,6 @@ export const createFrequencyArray = (array, keyString) => {
     var freqPairs = Object.keys(frequency).map( key => {
         return ({[keyString]: key, count: frequency[key]});
     });
-
-    console.log(freqPairs);
     
     // return sorted alphabetically
     return sortByKey(freqPairs, keyString);
