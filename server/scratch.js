@@ -82,30 +82,16 @@ const uniqueArray = array.filter((item, pos) => {
     return array.indexOf(item) === pos;
 })
 
-console.log(uniqueArray);
 
-// using spread operator to add more than 1 entry at a time;
-
-let items = [
-    {'a': 1, 'b': 2},
-    {'a': 2, 'b': 4},
-    {'a': 4, 'b': 8},
-    {'a': 8, 'b': 16}
-];
-
-// we want to add some elements to the objects above
 
 let additions = [
     {'c': 3, 'd': 4},
-    {'c': 6, 'd': 8},
+    {'c': 3, 'd': 8},
     {'c': 12, 'd': 16},
     {'c': 24, 'd': 32}
 ]
 
-const newObjArray = [];
+const newItems = additions.map( item => item.c)
+                          .sort();
 
-for (let idx = 0; idx < items.length; idx++) {
-    newObjArray.push({...items[idx], ...additions[idx]});
-};
-
-console.log(newObjArray);
+console.log(newItems);
