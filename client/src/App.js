@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ROUND_FACTOR } from './utils/constants';
-import { createFrequencyArray, removeEmptyVals, validateHhMmSs } from './utils/utilities';
+import { ROUND_FACTOR, TIME_HHMMSS_REGEXP, IATA_REGEXP } from './utils/constants';
+import { createFrequencyArray, removeEmptyVals, validateHhMmSs, validateInput, validateInputStringFormat } from './utils/utilities';
 import AirportInfoService from './services/AirportInfoService';
 import FlightDataService from './services/FlightDataService';
 
@@ -8,6 +8,7 @@ import FlightDataService from './services/FlightDataService';
 import DestinationsList from './components/DestinationsList';
 import CountryInfo from './components/CountryInfo';
 import DepartureTimes from './components/DepartureTimes';
+import JourneyTimes from './components/JourneyTimes';
 
 import './App.css';
 
@@ -58,13 +59,21 @@ function App() {
   };
 
   const getFlightsBefore = (departureTime) => {
-    let departuresBefore = 0;
-    if (validateHhMmSs(departureTime)) {
+    // ensure input time string is in a valid format (HH:MM:SS);
+    if (validateInputStringFormat(departureTime, TIME_HHMMSS_REGEXP)) {
       // grab all flight data from before this time
       FlightDataService.getDeparturesBefore(departureTime)
-      .then(data => setFlightsBefore(data.length))
+      .then(data => setFlightsBefore(data.length));
     } else {
-      setFlightsBefore(0)
+      setFlightsBefore(0);
+    };
+  };
+
+  const getAverageJourneyTime = (from, to) => {
+    // ensure inputs conform to IATA format
+    if (validateInputStringFormat(from, IATA_REGEXP) && validateInputStringFormat(to, IATA_REGEXP)) {
+      FlightDataService.getFullJourneys(from, to)
+      .then()
     }
   }
 
@@ -74,13 +83,17 @@ function App() {
       return AirportInfoService.getAirportInfo(airport.destair);
     });
     Promise.all(destCountries)
-    .then(responses => Promise.all(responses.map( res => res.country )))
+    .then(responses => Promise.all(responses.map( res => {
+      return {country: res.country, lat: res.latitude, long: res.longitude} 
+    })))
     .then(countries => {
+      // add country data to destinations data, required for later step
       const newDestinations = {data: [], set: true, countriesSet: true};
-
+      console.log(countries[0]);
       for (let idx = 0; idx < countries.length; idx++) {
-          newDestinations.data.push({...destinations.data[idx], country: countries[idx]})
+          newDestinations.data.push({...destinations.data[idx], ...countries[idx]})
       };
+      console.log(newDestinations.data);
       setDestinations(newDestinations);
       setCountries(countries.filter( (country, pos) => countries.indexOf(country) === pos)
                           .filter( removeEmptyVals )
@@ -94,6 +107,7 @@ function App() {
           <DestinationsList destinations={destinations.data} />
           <CountryInfo countries={countries} percentage={percentage} calcPerc={calculatePercentage} />
           <DepartureTimes flightsBefore={getFlightsBefore} numFlightsBefore={numFlightsBefore} />
+          <JourneyTimes origins={origins} destinations={destinations.data}/>
       </div>
     );
   }

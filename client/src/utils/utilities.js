@@ -17,24 +17,24 @@ export const createFrequencyArray = (array, keyString) => {
     
     // return sorted alphabetically
     return sortByKey(freqPairs, keyString);
-} 
+}; 
 
 // sort array of objects using an Object key
 export const sortByKey = (array, keyString, isDescending) => {
     if (isDescending) {
         return array.sort( (a, b) => (a[keyString] < b[keyString]) ? 1 : ((b.keyString < a.keyString) ? -1 : 0) ); 
-    }
+    };
     return array.sort( (a, b) => (a[keyString] > b[keyString]) ? 1 : ((b.keyString > a.keyString) ? -1 : 0) ); 
-} 
+}; 
 
-// filter function: remove all duplicates
+// filter function: remove empty or undefined array values
 export const removeEmptyVals = (value) => {
     return value != null && value != ""; 
-} 
+}; 
 
-// (from https://stackoverflow.com/questions/5563028/how-to-validate-with-javascript-an-input-text-with-hours-and-minutes
-export const validateHhMmSs = (inputString) => {
-    return /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputString);
-}
+// validate input string format
+export const validateInputStringFormat = (inputString, regexp) => {
+    return regexp.test(inputString);
+};
 
  

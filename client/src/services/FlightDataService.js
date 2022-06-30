@@ -1,24 +1,29 @@
-const flightsURL = "http://localhost:4444/api/flights/";
+const flightsUrl = "http://localhost:4444/api/flights";
 
 const FlightDataService = {
     
     getAllFlights() {
-        return fetch(flightsURL)
+        return fetch(flightsUrl)
             .then(res => res.json());
     },
 
     getFlightsByDeparture() {
-        return fetch(flightsURL + "departures")
-            .then(res => res.json());
-    },
-
-    getDeparturesBefore(time) {
-        return fetch(flightsURL + "departures/" + time)
+        return fetch(`${flightsUrl}/departures`)
             .then(res => res.json());
     },
 
     getFlightsByDestination() {
-        return fetch(flightsURL + "destinations")
+        return fetch(`${flightsUrl}/destinations`)
+            .then(res => res.json());
+    },
+
+    getDeparturesBefore(time) {
+        return fetch(`${flightsUrl}/schedules/${time}`)
+            .then(res => res.json());
+    },
+
+    getFullJourneys(from, to) {
+        return fetch(`${flightsUrl}/departures/${from}-${to}`)
             .then(res => res.json());
     }
 };

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.get('/:outdeparttime', (req, res) => {
     const { outdeparttime } = req.params;
     const earlierFlights = repo.flightData.filter((flight) => flight.outdeparttime < outdeparttime);
-    res.send(earlierFlights);
+    res.json(earlierFlights);
 });
 
 module.exports = router;
