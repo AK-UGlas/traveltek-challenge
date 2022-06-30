@@ -11,9 +11,9 @@ const CountryInfo = (props) => {
         <section>
             <h2>Display flight info by country</h2>
             <form>
-                <select name="countries" onChange = {handleChangeCountry}>
-                    <option disabled selected>Select a country</option>
-                    {props.countries.map((country, id) => <option key={id}>{country.country}</option>)}
+                <select name="countries" onChange = {handleChangeCountry} defaultValue="select a country">
+                    {props.countries
+                        .map((country, id) => <option key={id}>{country}</option>)}
                 </select>
             </form>
             <p>

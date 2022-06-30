@@ -14,7 +14,7 @@
 // const singleVal = flightData[0];
 // console.log(singleVal[key]);
 
-// const array = ["apples", "oranges", "oranges", "oranges", "bananas", "bananas", "oranges", "bananas", "bananas", "bananas"];
+const array = ["apples", "oranges", "oranges", "oranges", "bananas", "bananas", "oranges", "bananas", "bananas", "bananas"];
 
 
 // var frequency = {};
@@ -68,26 +68,18 @@
     {indeparttime: "11:21:00"}
 ]
 
-let items = [
-    {code: 'LAX'},
-    {code: 'DBL'},
-    {code: 'GLA'},
-    {code: 'EDI'},
-    {code: 'DXB'}
-];
+// let items = [
+//     {code: 'LAX', country: "US"},
+//     {code: 'DBL', country: "Ireland"},
+//     {code: 'GLA', country: "Scotland"},
+//     {code: 'EDI', country: "Edinburgh"},
+//     {code: 'DXB', country: "UAE"}
+// ];
 
-let countries = ['USA', 'IRELAND', 'SCOTLAND', 'SCOTLAND', 'UAE'];
 
-let itemsCopy = [...items];
 
-const newItems = [];
+const uniqueArray = array.filter((item, pos) => {
+    return array.indexOf(item) === pos;
+})
 
-for (let idx = 0; idx < items.length; idx++) {
-    newItems.push({...items[idx], country: countries[idx]})
-};
-
-console.log(newItems);
-
-console.log(newItems === items);
-
-console.log(typeof countries);
+console.log(uniqueArray);

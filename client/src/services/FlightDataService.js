@@ -12,6 +12,11 @@ const FlightDataService = {
             .then(res => res.json());
     },
 
+    getDeparturesBefore(time) {
+        return fetch(flightsURL + "departures/" + time)
+            .then(res => res.json());
+    },
+
     getFlightsByDestination() {
         return fetch(flightsURL + "destinations")
             .then(res => res.json());

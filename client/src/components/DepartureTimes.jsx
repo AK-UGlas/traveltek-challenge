@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const DepartureTimes = (flights) => {
+const DepartureTimes = (props) => {
 
     const [time, setTime] = useState("12:00:00");
-    const dataReady = (flights.length === 0);  
+    const dataReady = (props.flights.length === 0);  
     
     const handleChangeTime = (evt) => {
         console.log(`the time selected is ${evt.target.value}`);
@@ -28,7 +28,7 @@ const DepartureTimes = (flights) => {
                 </form>
                 <div>
                     <p>
-                        {dataReady ? `${flights.length} flights left before ${time}` : "Choose a time"}
+                        {dataReady ? `${props.flights.length} flights left before ${time}` : "Choose a time"}
                     </p>
                 </div>
             </section> 

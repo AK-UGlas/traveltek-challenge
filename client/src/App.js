@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createFrequencyArray } from './utils/utilities';
+import { ROUND_FACTOR } from './utils/constants';
+import { createFrequencyArray, removeEmptyVals, validateHhMmSs } from './utils/utilities';
 import AirportInfoService from './services/AirportInfoService';
 import FlightDataService from './services/FlightDataService';
 
@@ -14,10 +15,10 @@ function App() {
   
   const [percentage, setPercentage] = useState(0);
   const [flightCount, setFlightCount] = useState(0);
+  const [numFlightsBefore, setFlightsBefore] = useState(0);
   const [origins, setOrigins] = useState([]);
   const [destinations, setDestinations] = useState({data:[], set: false, countriesSet: false});
   const [countries, setCountries] = useState([]);
-  const [flightData, setFlightData] = useState([]);
 
   useEffect(() => {
     startUp();
@@ -48,12 +49,23 @@ function App() {
   };
 
   const calculatePercentage = (selectedDest) => {
-    const runningTotal = 0;
+    let runningTotal = 0;
     destinations.data.forEach((destination) => {
       if (destination.country === selectedDest) runningTotal += destination.count;
     });
+    // save number to 3 decimal places 
+    setPercentage( Math.round( ((((runningTotal / flightCount) * 100) + Number.EPSILON) * ROUND_FACTOR) ) / ROUND_FACTOR );
+  };
 
-    setPercentage( (runningTotal / flightCount) * 100 );
+  const getFlightsBefore = (departureTime) => {
+    let departuresBefore = 0;
+    if (validateHhMmSs(departureTime)) {
+      // grab all flight data from before this time
+      FlightDataService.getDeparturesBefore(departureTime)
+      .then(data => setFlightsBefore(data.length))
+    } else {
+      setFlightsBefore(0)
+    }
   }
 
   // map destination countries using unique airport codes
@@ -64,13 +76,15 @@ function App() {
     Promise.all(destCountries)
     .then(responses => Promise.all(responses.map( res => res.country )))
     .then(countries => {
-      //console.log(destinations);
       const newDestinations = {data: [], set: true, countriesSet: true};
 
       for (let idx = 0; idx < countries.length; idx++) {
           newDestinations.data.push({...destinations.data[idx], country: countries[idx]})
       };
       setDestinations(newDestinations);
+      setCountries(countries.filter( (country, pos) => countries.indexOf(country) === pos)
+                          .filter( removeEmptyVals )
+                          .sort());
     });  
   };
 
@@ -78,8 +92,8 @@ function App() {
     return (
       <div>
           <DestinationsList destinations={destinations.data} />
-          <CountryInfo countries={destinations.data} percentage={percentage} calcPerc={calculatePercentage}/>
-          <DepartureTimes flights={flightData} />
+          <CountryInfo countries={countries} percentage={percentage} calcPerc={calculatePercentage} />
+          <DepartureTimes flightsBefore={getFlightsBefore} numFlightsBefore={numFlightsBefore} />
       </div>
     );
   }
