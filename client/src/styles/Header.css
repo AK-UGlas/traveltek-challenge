@@ -1,0 +1,27 @@
+.header {
+    overflow: hidden;
+    padding: 10px 10px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.header a {
+    width: 210px;
+    height: 60px;
+    float: left;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 1px;
+    background-image: url(../../public/traveltek500x309.png);
+    background-size: cover
+  }
+
+.logos {
+    background-color: white;
+    border-radius: 5%;
+    width: 160px;
+    height: 200px;
+    margin: 10px;
+    padding: 1%;
+    transition: transform .2s;
+}
