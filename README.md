@@ -14,4 +14,19 @@ Then create a web-page that that can retrieve the data from the API, and process
 – What’s the average journey time between London Heathrow (LHR) and Dubai (DXB)?
 – At least one other statistic that you find interesting
 
-## Installation
+## Requirements
+
+**This project requires nodejs and npm to be installed on the host machine to run**
+
+visit [nodejs homepage](https://nodejs.org/en/) to download and install the latest version
+
+### Installation and Running the App
+
+navigate to server folder:
+```sh
+cd server
+npm install
+```
+
+Server (expressjs) and Client (reactjs) applications are treated separately
+
