@@ -12,14 +12,19 @@ const DestinationsList = ({destinations}) => {
 
     return (
         <>
-            <section>
-                <h2>
-                    Most Popular Destination Airports
-                </h2>
-                <ol >
-                    {destinationItems}
-                </ol>
-            </section>
+            <div className="card">
+                <div className="card-top">
+                    <h3>
+                        Most Popular Destination Airports
+                    </h3>
+                </div>
+                <div className="card-body">
+                    <p>Top 10</p>
+                    <ol>
+                        {destinationItems}
+                    </ol>
+                </div>
+            </div>
         </>
     )
 }

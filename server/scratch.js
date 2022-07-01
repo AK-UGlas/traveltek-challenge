@@ -78,29 +78,8 @@ const array = ["apples", "oranges", "oranges", "oranges", "bananas", "bananas", 
 
 
 
-const uniqueArray = array.filter((item, pos) => {
-    return array.indexOf(item) === pos;
-})
 
 
+const timeObj = { outdepdt: "2018-01-01T22:35:00", outarrdt: "2018-01-02T09:40:00" };
 
-let additions = [
-    {'c': 3, 'd': 4},
-    {'c': 3, 'd': 8},
-    {'c': 12, 'd': 16},
-    {'c': 24, 'd': 32}
-]
-let from = 12;
-let to = 24;
-
-const tzObjs = [from, to].map( item => {
-    return additions.find( obj => obj.c === item);
-  });
-
-let toObj = additions.filter( obj => obj.c === to);
-let fromObj = additions.filter( obj => obj.c === from);
-
-console.log(toObj);
-console.log(fromObj);
-
-console.log(tzObjs)
+console.log(Date.parse(timeObj.outdepdt))

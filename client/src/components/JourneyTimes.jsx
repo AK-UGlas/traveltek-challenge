@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { MILLIS_PER_HOUR } from "../utils/constants";
 
 const JourneyTimes = (props) => {
 
-    const [origin, setOrigin] = useState("");
-    const [destination, setDestination] = useState("");
+    const avg = (props.jt.reduce( (a, b) => a + b ) / props.jt.length) / MILLIS_PER_HOUR;
+    // hardcoded until I can achieve POST request on external API
+    const [origin, setOrigin] = useState("LHR");
+    const [destination, setDestination] = useState("DXB");
 
     const handleChangeOrigin = (evt) => {
         setOrigin(evt.target.value);
@@ -20,23 +23,27 @@ const JourneyTimes = (props) => {
 
     return (
         <>
-            <section>
-                <h2>View average journey times</h2>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="origin">Origin:</label>
-                    <select name="origin" defaultValue="Choose origin airport" onChange={handleChangeOrigin}>
-                        {props.origins.map((origin, id) => <option key={id}>{origin}</option>)}
-                    </select>
-                    <label htmlFor="destination">Destination:</label>
-                    <select name="destination" defaultValue="Choose destination" onChange={handleChangeDestination}>
-                        {props.destinations.sort().map((dest, id) => <option key={id}>{dest.destair}</option>)}
-                    </select>
-                    <input type="submit" value="Get journey times"/>
-                </form>
-                <p>
-                    
-                </p>
-            </section>
+            <div className="card">
+                <div className="card-top">
+                    <h3>View Average Journey Times</h3>
+                </div>
+                <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="origin">Origin:</label>
+                        <select name="origin" value="LHR" onChange={handleChangeOrigin} disabled>
+                            {props.origins.map((origin, id) => <option key={id}>{origin}</option>)}
+                        </select>
+                        <label htmlFor="destination">Destination:</label>
+                        <select name="destination" value="DXB" onChange={handleChangeDestination} disabled>
+                            {props.destinations.sort().map((dest, id) => <option key={id}>{dest.destair}</option>)}
+                        </select>
+                        <input type="submit" value="Get journey times"/>
+                    </form>
+                    <p>
+                        {avg > 0 ? `Average journey time: ${Math.round(avg * 100) / 100} hours` : ``}
+                    </p>
+                </div>
+            </div>
         </>
     );
 };

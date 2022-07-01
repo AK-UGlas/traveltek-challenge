@@ -8,18 +8,22 @@ const CountryInfo = (props) => {
 
     return (
         <>
-        <section>
-            <h2>Display flight info by country</h2>
-            <form>
-                <select name="countries" onChange = {handleChangeCountry} defaultValue="select a country">
-                    {props.countries
-                        .map((country, id) => <option key={id}>{country}</option>)}
-                </select>
-            </form>
-            <p>
-                {props.percentage > 0 ? `% total flights arriving here: ${props.percentage}`: ``}
-            </p>
-        </section>
+        <div className="card">
+            <div className="card-top">
+                <h3>Display Flight Info By Country</h3>
+            </div>
+            <div className="card-body">
+                <form>
+                    <select name="countries" onChange = {handleChangeCountry} defaultValue="select a country">
+                        {props.countries
+                            .map((country, id) => <option key={id}>{country}</option>)}
+                    </select>
+                </form>
+                <p>
+                    {props.percentage > 0 ? `% total flights arriving here: ${props.percentage}`: ``}
+                </p>
+            </div>
+        </div>
         </>
     )
 

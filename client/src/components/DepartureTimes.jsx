@@ -17,21 +17,25 @@ const DepartureTimes = (props) => {
 
     return (
         <>
-            <section>
-                <h3>
-                    Choose a time to see all available flights
-                </h3>
-                <form onSubmit={handleTimeSubmit}>
-                    <label htmlFor="deptTime">Departs Before:</label>
-                    <input type="time" name="deptTime" onChange={handleChangeTime}/>
-                    <input type="submit" value="Get flight count"/>
-                </form>
-                <div>
-                    <p>
-                        {dataReady ? `${props.numFlightsBefore} flights left before ${time}` : "Choose a time"}
-                    </p>
+            <div className="card">
+                <div className="card-top">
+                    <h3>
+                        Enter a Time to View Previous Departures
+                    </h3>
                 </div>
-            </section> 
+                <div className="card-body">
+                    <form onSubmit={handleTimeSubmit}>
+                        <label htmlFor="deptTime">Departs Before:</label>
+                        <input type="time" name="deptTime" onChange={handleChangeTime}/>
+                        <input type="submit" value="Get flight count"/>
+                    </form>
+                    <div>
+                        <p>
+                            {dataReady ? `${props.numFlightsBefore} flights left before ${time}` : "Choose a time"}
+                        </p>
+                    </div>
+                </div>
+            </div> 
         </>
     );
 };

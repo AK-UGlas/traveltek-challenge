@@ -1,9 +1,10 @@
 import React from "react";
+import '../styles/Destination.css'
 
 const Destination = (props) => {
     return (
-        <li>
-            <h1>{props.destination} ({props.country})</h1>
+        <li className="list-item">
+            <p>{props.destination} ({props.country})</p>
         </li>
     )
 }
