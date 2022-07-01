@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ROUND_FACTOR, TIME_HHMMSS_REGEXP, IATA_REGEXP } from '../utils/constants';
+import spinner from '../images/logo192.png';
+import { ROUND_FACTOR, TIME_HHMMSS_REGEXP, IATA_REGEXP, MILLIS_PER_HOUR } from '../utils/constants';
 import { createFrequencyArray, removeEmptyVals, validateHhMmSs, validateInput, validateInputStringFormat } from '../utils/utilities';
 
 // api services
@@ -21,6 +22,7 @@ export const InfoContainer = () => {
   const [origins, setOrigins] = useState([]);
   const [destinations, setDestinations] = useState({data:[], set: false, countriesSet: false});
   const [countries, setCountries] = useState([]);
+  const [journeyTimes, setJourneyTimes] = useState([0]);
 
   useEffect(() => {
     startUp();
@@ -79,40 +81,33 @@ export const InfoContainer = () => {
       const tzObjs = [from, to].map( item => {
         return destinations.data.find( obj => obj.destair === item);
       });
-
+      
       // use lat and long values to grab timezone information from origin and destination
       // then convert destination to origin time zone and calculate the time difference
-      
       Promise.all(tzObjs.map( tz => {
         return TimezoneService.getTimezoneFromLatlong(tz.lat, tz.long)
       }))
       .then( res => res.map ( zone => zone.timeZone) )
       .then( zones => queryFlightPath(from, to, zones))
-           
-      
-      // .then(journeys => {
-      //   const timeZones = journeys.map( )
-      // })
     }
-  }
+  };
 
   const queryFlightPath = (from, to, timezones) => {
      
     // get all flights matching original flightpath query
     FlightDataService.getFullJourneys(from, to)
     .then( flightPaths => flightPaths.map( path => {
-      return {outdepdt: `${path.outdepartdate} ${path.outdeparttime}`, outarrdt: `${path.outarrivaldate}T${path.outarrivaltime}`}
+      return {outdepdt: `${path.outdepartdate}T${path.outdeparttime}`, outarrdt: `${path.outarrivaldate}T${path.outarrivaltime}`}
     }))
-    .then( datetimes => Promise.all(datetimes.map( dt => {
-      TimezoneService.convertToTimeZone(timezones[0], dt.outdepdt, timezones[1])
-      .then(res => matchTimeZones(res.conversionResult.dateTime, dt.outarrdt))
-    })));
-  }
+    .then( res => res.map( dt => Date.parse(dt.outarrdt) - (Date.parse(dt.outdepdt) + (MILLIS_PER_HOUR * 3) )))
+    .then(timestamps => setJourneyTimes(timestamps))
 
-  const matchTimeZones = (outDepartureTime, outArrivalTime) => {
-    console.log(outDepartureTime);
-    console.log(outArrivalTime);
-  }
+    // NB query below failing due to CORS issue - TODO: route API PUT req via proxy middleware server  
+    // .then( datetimes => Promise.all(datetimes.map( dt => {
+    //   TimezoneService.convertToTimeZone(timezones[0], dt.outdepdt, timezones[1])
+    //   .then(res => matchTimeZones(res.conversionResult.dateTime, dt.outarrdt))
+    // })));
+  };
 
   // map destination countries using unique airport codes
   const getCountries = (airports) => {
@@ -141,14 +136,19 @@ export const InfoContainer = () => {
 
     if (destinations.countriesSet) {
         return (
-            <>
+            <div className="info-container">
                 <DestinationsList destinations={destinations.data} />
                 <CountryInfo countries={countries} percentage={percentage} calcPerc={calculatePercentage} />
                 <DepartureTimes flightsBefore={getFlightsBefore} numFlightsBefore={numFlightsBefore} />
-                <JourneyTimes origins={origins} destinations={destinations.data} getJourneyTime={getAverageJourneyTime} />
-            </>
+                <JourneyTimes origins={origins} destinations={destinations.data} jt={journeyTimes} getJourneyTime={getAverageJourneyTime} />
+            </div>
         )}
-    return (<h1>Loading data</h1>)
+    return (
+      <>
+        <h1>Loading data</h1>
+        <img className="spinner" src={spinner} alt="React spinner logo"></img>
+      </>
+    );   
 };
 
 export default InfoContainer;
