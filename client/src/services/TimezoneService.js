@@ -9,7 +9,9 @@ const TimezoneService = {
         let options = {
             method: 'GET',
             headers: {
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Origin': 'http://localhost:3000',
+                'Access-Control-Request-Headers': 'access-control-allow-origin'
             }
         };
 
@@ -30,7 +32,8 @@ const TimezoneService = {
             method: 'POST',
             headers: {
                 'accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Origin': 'http://localhost:3000'
             },
             body: JSON.stringify(body)
         };

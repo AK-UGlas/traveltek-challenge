@@ -94,7 +94,6 @@ let from = 12;
 let to = 24;
 
 const tzObjs = [from, to].map( item => {
-    console.log(item);
     return additions.find( obj => obj.c === item);
   });
 

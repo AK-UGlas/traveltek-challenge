@@ -17,5 +17,9 @@ const validateIata = (inputString) => {
 var d = new Date();
 var n = d.getTimezoneOffset();
 
-console.log(d);
+
+
+
+
+
 

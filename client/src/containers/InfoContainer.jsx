@@ -76,22 +76,42 @@ export const InfoContainer = () => {
     if (validateInputStringFormat(from, IATA_REGEXP) && validateInputStringFormat(to, IATA_REGEXP)) {
       
         // get timezones for origin and destination
-      const tzObjs = [from, to].forEach( item => {
-        destinations.data.find( obj => obj.destair === item);
-      })
-
-      console.log(tzObjs);
+      const tzObjs = [from, to].map( item => {
+        return destinations.data.find( obj => obj.destair === item);
+      });
 
       // use lat and long values to grab timezone information from origin and destination
       // then convert destination to origin time zone and calculate the time difference
       
-      // TimezoneService.getTimezoneFromLatlong(from, to)
-      // .then()
-      // FlightDataService.getFullJourneys(from, to)
+      Promise.all(tzObjs.map( tz => {
+        return TimezoneService.getTimezoneFromLatlong(tz.lat, tz.long)
+      }))
+      .then( res => res.map ( zone => zone.timeZone) )
+      .then( zones => queryFlightPath(from, to, zones))
+           
+      
       // .then(journeys => {
       //   const timeZones = journeys.map( )
       // })
     }
+  }
+
+  const queryFlightPath = (from, to, timezones) => {
+     
+    // get all flights matching original flightpath query
+    FlightDataService.getFullJourneys(from, to)
+    .then( flightPaths => flightPaths.map( path => {
+      return {outdepdt: `${path.outdepartdate} ${path.outdeparttime}`, outarrdt: `${path.outarrivaldate}T${path.outarrivaltime}`}
+    }))
+    .then( datetimes => Promise.all(datetimes.map( dt => {
+      TimezoneService.convertToTimeZone(timezones[0], dt.outdepdt, timezones[1])
+      .then(res => matchTimeZones(res.conversionResult.dateTime, dt.outarrdt))
+    })));
+  }
+
+  const matchTimeZones = (outDepartureTime, outArrivalTime) => {
+    console.log(outDepartureTime);
+    console.log(outArrivalTime);
   }
 
   // map destination countries using unique airport codes
