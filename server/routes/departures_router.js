@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     res.json(utils.filterByKey(repo.flightData, 'depair'));
 });
 
-// router.get('/firstclass', (req, res) => {
+// router.get('/class', (req, res) => {
 //     res.json(utils.filterByKey(repo.flightData, 'outflightclass'))
 // })
 
